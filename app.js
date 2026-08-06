@@ -1,5 +1,5 @@
 /**
- * Awesome Nano Banana Images Web Showcase - Core Logic
+ * Awesome Nano Banana Images Web Showcase - Core Logic (Traditional Chinese)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,8 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFavCountUI();
 
     try {
-      const response = await fetch('cases_data.json');
-      if (!response.ok) throw new Error('Failed to load cases data');
+      // Add cache busting & no-store to force browser to fetch latest Traditional Chinese data
+      const response = await fetch('cases_data.json?v=' + Date.now(), { cache: 'no-store' });
+      if (!response.ok) throw new Error('無法載入案例資料');
       casesData = await response.json();
       
       // Update statistics
@@ -212,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="card-top">
             <div class="card-badge-group">
               <span class="model-badge ${item.is_pro ? 'pro' : 'std'}">
-                ${item.is_pro ? 'Pro 模型' : 'Nano Banana'}
+                ${item.is_pro ? 'PRO 模型' : 'Nano Banana'}
               </span>
               <span class="case-number">例 ${item.case_num}</span>
             </div>
@@ -304,7 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const item = casesData.find(c => c.id === id);
     if (!item) return;
 
-    const isFav = favorites.includes(item.id);
     const hasInputImg = !!item.input_image;
 
     // Detect placeholders in prompt: e.g., {角色名字}, {称号}, [阿童木], [标题], etc.
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="modal-header-row">
         <div>
           <span class="model-badge ${item.is_pro ? 'pro' : 'std'}" style="margin-bottom: 8px; display: inline-block;">
-            ${item.is_pro ? 'Nano Banana Pro 例 ' + item.case_num : 'Nano Banana 例 ' + item.case_num}
+            ${item.is_pro ? 'PRO 模型 例 ' + item.case_num : 'Nano Banana 例 ' + item.case_num}
           </span>
           <h2 class="modal-title">${escapeHtml(item.title)}</h2>
           ${item.author ? `
@@ -418,7 +418,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function extractPlaceholders(promptText) {
     if (!promptText) return [];
     const matches = promptText.match(/(\{[^{}]+\}|\[[^\[\]]+\])/g) || [];
-    // Filter duplicates and exclude code syntax brackets if any
     const unique = [...new Set(matches)].filter(m => m.length > 2 && m.length < 30);
     return unique;
   }
