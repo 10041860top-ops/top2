@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awesome Nano Banana Images | 提示詞畫廊與互動展覽館</title>
+  <meta name="description" content="精選 Google Nano-Banana / Nano-Banana-Pro AI 圖像生成與編輯提示詞畫廊，支援即時搜尋、分類篩選、提示詞變數自訂與一鍵複製。">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Background Glow & Grid Canvas -->
+  <div class="bg-effects">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <!-- Navbar / Header -->
+  <header class="site-header glass-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-banana icon-banana"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Awesome Nano Banana <span>Gallery</span></h1>
+          <span class="brand-subtitle">AI 提示詞與創意畫廊庫</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <a href="https://github.com/PicoTrex/Awesome-Nano-Banana-images/" target="_blank" rel="noopener" class="github-badge-btn" title="查看 Github 原創專案">
+          <i class="fa-brands fa-github"></i>
+          <span>GitHub ⭐ Star</span>
+        </a>
+        <button id="themeToggle" class="icon-btn" title="切換深色/淺色模式">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fa-solid fa-sparkles"></i> 收錄 160+ 精選 Prompt 與 150k+ 一致性資料集
+      </div>
+      <h2 class="hero-title">探索 Google Nano-Banana<br><span class="text-gradient">影像生成與編輯的極致潛能</span></h2>
+      <p class="hero-desc">
+        即時搜尋、分類瀏覽、一鍵複製 Prompt，更支援互動式變數填寫功能！
+      </p>
+
+      <!-- Stats Bar -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-value" id="statTotal">162</span>
+          <span class="stat-label">Prompt 案例總數</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="statPro">52</span>
+          <span class="stat-label">Nano Banana Pro</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="statStandard">110</span>
+          <span class="stat-label">Nano Banana</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">150k+</span>
+          <span class="stat-label">一致性人物數據集</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Control & Filter Panel -->
+  <main class="main-container">
+    <section class="controls-section glass-panel">
+      <!-- Search Box -->
+      <div class="search-box-wrapper">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="searchInput" placeholder="搜尋提示詞、關鍵字、標題或創作者 (例如: 浮世繪, 拆解, PPT, @ZHO_ZHO_ZHO)..." autocomplete="off">
+        <button id="clearSearchBtn" class="clear-btn" title="清除搜尋" style="display: none;">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Main Section Tabs (All / Pro / Standard / Favorites) -->
+      <div class="filter-tabs-row">
+        <div class="model-tabs">
+          <button class="tab-btn active" data-model="all">
+            <i class="fa-solid fa-cubes"></i> 全部 <span>(162)</span>
+          </button>
+          <button class="tab-btn pro-tab" data-model="pro">
+            <i class="fa-solid fa-crown"></i> Nano Banana Pro <span>(52)</span>
+          </button>
+          <button class="tab-btn std-tab" data-model="std">
+            <i class="fa-solid fa-bolt"></i> Nano Banana <span>(110)</span>
+          </button>
+          <button class="tab-btn fav-tab" data-model="fav">
+            <i class="fa-solid fa-heart"></i> 我的收藏 <span id="favCount">(0)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tag Filters -->
+      <div class="category-tags-row" id="tagFiltersContainer">
+        <span class="tag-filter-title">風格與類別：</span>
+        <button class="tag-chip active" data-tag="all">全部類別</button>
+        <button class="tag-chip" data-tag="3D & 幾何"><i class="fa-solid fa-cube"></i> 3D & 幾何</button>
+        <button class="tag-chip" data-tag="排版與圖表"><i class="fa-solid fa-file-invoice"></i> 排版與圖表</button>
+        <button class="tag-chip" data-tag="擬真攝影"><i class="fa-solid fa-camera"></i> 擬真攝影</button>
+        <button class="tag-chip" data-tag="二次元與插畫"><i class="fa-solid fa-paintbrush"></i> 二次元與插畫</button>
+        <button class="tag-chip" data-tag="編輯與修圖"><i class="fa-solid fa-wand-magic-sparkles"></i> 編輯與修圖</button>
+        <button class="tag-chip" data-tag="創意與超現實"><i class="fa-solid fa-head-side-virus"></i> 創意與超現實</button>
+      </div>
+    </section>
+
+    <!-- Results Status Bar -->
+    <div class="results-header">
+      <span id="resultsCount">顯示 162 個案例</span>
+      <div class="sort-wrapper">
+        <label for="sortSelect"><i class="fa-solid fa-arrow-down-short-wide"></i> 排序：</label>
+        <select id="sortSelect">
+          <option value="default">預設排序</option>
+          <option value="num-asc">例號小到大</option>
+          <option value="num-desc">例號大到小</option>
+          <option value="title">標題排序</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <section class="gallery-grid" id="galleryGrid">
+      <!-- Cards will be dynamically inserted here -->
+    </section>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <i class="fa-solid fa-ghost empty-icon"></i>
+      <h3>找不到符合條件的 Prompt 案例</h3>
+      <p>請嘗試使用不同的搜尋關鍵字或切換分類標籤。</p>
+      <button class="btn primary-btn" id="resetFiltersBtn">重置所有篩選條件</button>
+    </div>
+  </main>
+
+  <!-- Detail & Prompt Customizer Lightbox Modal -->
+  <div class="modal-overlay" id="modalOverlay" style="display: none;">
+    <div class="modal-card glass-modal">
+      <button class="modal-close-btn" id="modalCloseBtn" title="關閉 modal (Esc)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-body" id="modalBody">
+        <!-- Modal content dynamically generated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>Awesome Nano Banana Images Web Showcase &copy; 2026</p>
+      <p class="footer-sub">Based on <a href="https://github.com/PicoTrex/Awesome-Nano-Banana-images/" target="_blank">PicoTrex/Awesome-Nano-Banana-images</a> open-source dataset.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
